@@ -1,0 +1,12 @@
+service:
+  name: "CamundaMigration"
+  description: "Service for orchestrating the migration from Camunda 7 to Camunda 8"
+  version: "1.0.0"
+  dependencies:
+    - name: "grpc"
+      version: "^1.0.0"
+    - name: "rest-client"
+      version: "^1.0.0"
+  wasm:
+    optional: true
+    program: "migration.wasm"

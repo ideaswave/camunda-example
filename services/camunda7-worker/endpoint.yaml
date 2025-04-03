@@ -1,0 +1,60 @@
+rests:
+  # Starts a process instance
+  - path: "/engine-rest/process-definition/key/{key}/start"
+    post:
+      uri: "direct:startCamunda7ProcessInstance"
+      description: "Starts a process instance by key"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Retrieves a list of tasks
+  - path: "/engine-rest/task"
+    get:
+      uri: "direct:getTaskList"
+      description: "Retrieves a list of tasks"
+      produces: "application/json"
+
+  # Completes a task
+  - path: "/engine-rest/task/{id}/complete"
+    post:
+      uri: "direct:completeTask"
+      description: "Completes a task by ID"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Retrieves process instance details
+  - path: "/engine-rest/process-instance/{id}"
+    get:
+      uri: "direct:getProcessInstanceDetails"
+      description: "Retrieves details of a process instance by ID"
+      produces: "application/json"
+
+  # Suspends a process instance
+  - path: "/engine-rest/process-instance/{id}/suspended"
+    post:
+      uri: "direct:suspendProcessInstance"
+      description: "Suspends a process instance by ID"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Deletes a process instance
+  - path: "/engine-rest/process-instance/{id}"
+    delete:
+      uri: "direct:deleteProcessInstance"
+      description: "Deletes a process instance by ID"
+      produces: "application/json"
+
+  # Retrieves deployment details
+  - path: "/engine-rest/deployment/{id}"
+    get:
+      uri: "direct:getDeploymentDetails"
+      description: "Retrieves details of a deployment by ID"
+      produces: "application/json"
+
+  # Creates a deployment
+  - path: "/engine-rest/deployment/create"
+    post:
+      uri: "direct:createDeployment"
+      description: "Creates a new deployment"
+      consumes: "multipart/form-data"
+      produces: "application/json"

@@ -1,0 +1,37 @@
+routes:
+  - service: "Camunda8Worker"
+  
+  # Route for starting a process instance
+  - id: "startCamunda8ProcessInstance"
+    from: "grpc:Camunda8.ProcessDefinitionService/StartProcessInstance"
+    steps:
+      - to: "func:startProcessInstance"
+      - to: "log:ProcessInstanceStarted?level=INFO"
+
+  # Route for getting a task list
+  - id: "getTaskList"
+    from: "grpc:Camunda8.TaskService/GetTasks"
+    steps:
+      - to: "func:getTaskList"
+      - to: "log:TaskListRetrieved?level=INFO"
+
+  # Route for completing a task
+  - id: "completeTask"
+    from: "grpc:Camunda8.TaskService/CompleteTask"
+    steps:
+      - to: "func:completeTask"
+      - to: "log:TaskCompleted?level=INFO"
+
+  # Route for suspending a process instance
+  - id: "suspendProcessInstance"
+    from: "grpc:Camunda8.ProcessInstanceService/SuspendProcessInstance"
+    steps:
+      - to: "func:suspendProcessInstance"
+      - to: "log:ProcessInstanceSuspended?level=INFO"
+
+  # Route for deleting a process instance
+  - id: "deleteProcessInstance"
+    from: "grpc:Camunda8.ProcessInstanceService/DeleteProcessInstance"
+    steps:
+      - to: "func:deleteProcessInstance"
+      - to: "log:ProcessInstanceDeleted?level=INFO"

@@ -1,0 +1,16 @@
+rests:
+  # Overrides the start process instance endpoint
+  - path: "/api/process-definition/key/{key}/start"
+    post:
+      uri: "direct:startMigrationProcessInstance"
+      description: "Starts a process instance and synchronizes state between Camunda 7 and Camunda 8"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Overrides the complete task endpoint
+  - path: "/api/tasks/{id}/complete"
+    post:
+      uri: "direct:completeTask"
+      description: "Completes a task and synchronizes state between Camunda 7 and Camunda 8"
+      consumes: "application/json"
+      produces: "application/json"

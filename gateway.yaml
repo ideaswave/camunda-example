@@ -1,0 +1,87 @@
+gateway:
+  description: "API Gateway configuration for managing endpoints and overrides"
+  
+  # Global settings for the gateway
+  settings:
+    rate-limiting:
+      enabled: true
+      default-limit: 1000 # requests per minute per client
+    authentication:
+      enabled: true
+      type: "jwt" # Options: jwt, api-key, oauth2
+      public-key: "/path/to/public-key.pem" # For JWT validation
+    cors:
+      enabled: true
+      allowed-origins:
+        - "https://example.com"
+        - "https://another-client.com"
+      allowed-methods:
+        - "GET"
+        - "POST"
+        - "PUT"
+        - "DELETE"
+      allowed-headers:
+        - "Authorization"
+        - "Content-Type"
+
+  # Endpoint definitions
+  endpoints:
+    # Starts a process instance
+    - path: "/api/process-definition/key/{key}/start"
+      method: "POST"
+      target: "direct:startProcessInstance"
+      description: "Starts a process instance by key"
+      rate-limiting:
+        limit: 500 # Override default limit for this endpoint
+      authentication:
+        required: true
+      cors:
+        enabled: true
+      overrides:
+        - service: "camunda-migration"
+          condition: "{{ migrationEnabled }}"
+          target: "direct:migrationStartProcessInstance"
+
+    # Retrieves a list of tasks
+    - path: "/api/tasks"
+      method: "GET"
+      target: "direct:getTaskList"
+      description: "Retrieves a list of tasks"
+      rate-limiting:
+        limit: 1000
+      authentication:
+        required: true
+
+    # Completes a task
+    - path: "/api/tasks/{id}/complete"
+      method: "POST"
+      target: "direct:completeTask"
+      description: "Completes a task by ID"
+      rate-limiting:
+        limit: 500
+      authentication:
+        required: true
+      overrides:
+        - service: "camunda-migration"
+          condition: "{{ migrationEnabled }}"
+          target: "direct:migrationCompleteTask"
+
+    # Suspends a process instance
+    - path: "/api/process-instance/{id}/suspend"
+      method: "POST"
+      target: "direct:suspendProcessInstance"
+      description: "Suspends a process instance by ID"
+      rate-limiting:
+        limit: 200
+      authentication:
+        required: true
+
+    # Deletes a process instance
+    - path: "/api/process-instance/{id}"
+      method: "DELETE"
+      target: "direct:deleteProcessInstance"
+      description: "Deletes a process instance by ID"
+      rate-limiting:
+        limit: 200
+      authentication:
+        required: true

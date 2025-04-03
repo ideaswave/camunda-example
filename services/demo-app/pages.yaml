@@ -1,0 +1,71 @@
+pages:
+  # Home Page
+  - id: home
+    title: "Home Page"
+    layout: "main-layout"
+    routes:
+      - path: "/"
+        default: true
+
+  # Dashboard Page
+  - id: dashboard
+    title: "Dashboard"
+    layout: "main-layout"
+    routes:
+      - path: "/dashboard"
+
+  # Task List Page
+  - id: task-list
+    title: "Task List"
+    layout: "main-layout"
+    routes:
+      - path: "/tasks"
+
+  # Task Details Page
+  - id: task-details
+    title: "Task Details"
+    layout: "main-layout"
+    routes:
+      - path: "/tasks/{id}"
+
+  # Start Process Page
+  - id: start-process
+    title: "Start Process"
+    layout: "main-layout"
+    routes:
+      - path: "/process/start"
+
+  # Process Instance List Page
+  - id: process-instances
+    title: "Process Instances"
+    layout: "main-layout"
+    routes:
+      - path: "/process-instances"
+
+  # Process Instance Details Page
+  - id: process-instance-details
+    title: "Process Instance Details"
+    layout: "main-layout"
+    routes:
+      - path: "/process-instances/{id}"
+
+  # Deployment List Page
+  - id: deployments
+    title: "Deployments"
+    layout: "main-layout"
+    routes:
+      - path: "/deployments"
+
+  # Deployment Details Page
+  - id: deployment-details
+    title: "Deployment Details"
+    layout: "main-layout"
+    routes:
+      - path: "/deployments/{id}"
+
+  # Settings Page
+  - id: settings
+    title: "Settings"
+    layout: "main-layout"
+    routes:
+      - path: "/settings"

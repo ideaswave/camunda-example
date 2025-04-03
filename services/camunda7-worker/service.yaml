@@ -1,0 +1,14 @@
+service:
+  name: Camunda7Worker
+  code: ./camunda7-worker.wasm
+  version: "1.0.0"
+  description: "Handles authentication requests"
+  entrypoint: "main"  # Function inside the WASM module
+  runtime: "wasm"  # Runtime type (wasm, wasi)
+  memory_limit: "32MB"  # Maximum memory allocation
+  dependencies:
+    - "crypto"  # Cryptographic module
+    - "kv-store"  # External key-value store
+  security:
+    isolation: "sandboxed"
+    permissions: []  # No direct file access

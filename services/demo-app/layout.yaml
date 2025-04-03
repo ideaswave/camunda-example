@@ -1,0 +1,99 @@
+layouts:
+  # Main Layout
+  - id: main-layout
+    description: "Main structure with navbar, sidebar, and content area"
+    structure:
+      header:
+        height: "60px"
+        fixed: true
+        content: "navbar"
+
+      sidebar:
+        width: "250px"
+        collapsible: true
+        content: "menu"
+
+      main:
+        flex-grow: 1
+        content: "page-content"
+
+      footer:
+        height: "40px"
+        content: "footer"
+
+  # Dashboard Layout
+  - id: dashboard-layout
+    extends: "main-layout"
+    structure:
+      sidebar:
+        width: "300px"
+        visible: "{{ user.isAdmin }}"
+      main:
+        widgets:
+          - id: "task-status-chart"
+          - id: "active-process-instances-chart"
+          - id: "stats-overview"
+
+  # Task List Layout
+  - id: task-list-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "task-table"
+
+  # Task Details Layout
+  - id: task-details-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "task-details"
+
+  # Process Instance List Layout
+  - id: process-instance-list-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "process-instance-table"
+
+  # Process Instance Details Layout
+  - id: process-instance-details-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "process-instance-details"
+
+  # Deployment List Layout
+  - id: deployment-list-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "deployment-table"
+
+  # Deployment Details Layout
+  - id: deployment-details-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "deployment-details"
+
+  # Start Process Layout
+  - id: start-process-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "start-process-form"
+
+  # Settings Layout
+  - id: settings-layout
+    extends: "main-layout"
+    structure:
+      main:
+        widgets:
+          - id: "settings-form"

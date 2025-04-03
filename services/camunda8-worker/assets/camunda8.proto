@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package camunda8;
+
+// Service for managing process definitions
+service ProcessDefinitionService {
+  rpc StartProcessInstance (StartProcessInstanceRequest) returns (StartProcessInstanceResponse);
+}
+
+// Service for managing tasks
+service TaskService {
+  rpc GetTasks (GetTasksRequest) returns (GetTasksResponse);
+  rpc CompleteTask (CompleteTaskRequest) returns (CompleteTaskResponse);
+}
+
+// Service for managing process instances
+service ProcessInstanceService {
+  rpc SuspendProcessInstance (SuspendProcessInstanceRequest) returns (SuspendProcessInstanceResponse);
+  rpc DeleteProcessInstance (DeleteProcessInstanceRequest) returns (DeleteProcessInstanceResponse);
+}
+
+// Messages for starting a process instance
+message StartProcessInstanceRequest {
+  string processDefinitionKey = 1;
+  map<string, Variable> variables = 2;
+}
+
+message StartProcessInstanceResponse {
+  string processInstanceId = 1;
+}
+
+// Messages for retrieving tasks
+message GetTasksRequest {
+  string assignee = 1;
+}
+
+message GetTasksResponse {
+  repeated Task tasks = 1;
+}
+
+message Task {
+  string id = 1;
+  string name = 2;
+  string assignee = 3;
+  string dueDate = 4;
+  string status = 5;
+}
+
+// Messages for completing a task
+message CompleteTaskRequest {
+  string taskId = 1;
+  map<string, Variable> variables = 2;
+}
+
+message CompleteTaskResponse {
+  string result = 1;
+}
+
+// Messages for suspending a process instance
+message SuspendProcessInstanceRequest {
+  string processInstanceId = 1;
+}
+
+message SuspendProcessInstanceResponse {
+  string result = 1;
+}
+
+// Messages for deleting a process instance
+message DeleteProcessInstanceRequest {
+  string processInstanceId = 1;
+}
+
+message DeleteProcessInstanceResponse {
+  string result = 1;
+}
+
+// Common message for variables
+message Variable {
+  string name = 1;
+  string value = 2;
+  string type = 3;
+}

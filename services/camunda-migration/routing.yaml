@@ -1,0 +1,32 @@
+routes:
+  - service: "CamundaMigration"
+
+  # Route for starting a process instance
+  - id: "startMigrationProcessInstance"
+    from: "rest:post:/api/process-definition/key/{key}/start"
+    steps:
+      - choice:
+          when:
+            - condition: "{{ useCamunda8 }}"
+              steps:
+                - to: "grpc:Camunda8.ProcessDefinitionService/StartProcessInstance"
+            - condition: "{{ not useCamunda8 }}"
+              steps:
+                - to: "rest:post:/engine-rest/process-definition/key/{key}/start"
+      - to: "func:syncProcessInstanceState"
+      - to: "log:ProcessInstanceStarted?level=INFO"
+
+  # Route for completing a task
+  - id: "completeTask"
+    from: "rest:post:/api/tasks/{id}/complete"
+    steps:
+      - choice:
+          when:
+            - condition: "{{ useCamunda8 }}"
+              steps:
+                - to: "grpc:Camunda8.TaskService/CompleteTask"
+            - condition: "{{ not useCamunda8 }}"
+              steps:
+                - to: "rest:post:/engine-rest/task/{id}/complete"
+      - to: "func:syncTaskState"
+      - to: "log:TaskCompleted?level=INFO"

@@ -1,0 +1,57 @@
+routes:
+  - service: "Camunda7Worker"
+  # Route for starting a process instance
+  - id: "startCamunda7ProcessInstance"
+    from: "rest:post:/engine-rest/process-definition/key/{key}/start"
+    steps:
+      - to: "func:startProcessInstance"
+      - to: "log:ProcessInstanceStarted?level=INFO"
+
+  # Route for getting a task list
+  - id: "getTaskList"
+    from: "rest:get:/engine-rest/task"
+    steps:
+      - to: "func:getTaskList"
+      - to: "log:TaskListRetrieved?level=INFO"
+
+  # Route for completing a task
+  - id: "completeTask"
+    from: "rest:post:/engine-rest/task/{id}/complete"
+    steps:
+      - to: "func:completeTask"
+      - to: "log:TaskCompleted?level=INFO"
+
+  # Route for getting process instance details
+  - id: "getProcessInstanceDetails"
+    from: "rest:get:/engine-rest/process-instance/{id}"
+    steps:
+      - to: "func:getProcessInstanceDetails"
+      - to: "log:ProcessInstanceDetailsRetrieved?level=INFO"
+
+  # Route for suspending a process instance
+  - id: "suspendProcessInstance"
+    from: "rest:post:/engine-rest/process-instance/{id}/suspended"
+    steps:
+      - to: "func:suspendProcessInstance"
+      - to: "log:ProcessInstanceSuspended?level=INFO"
+
+  # Route for deleting a process instance
+  - id: "deleteProcessInstance"
+    from: "rest:delete:/engine-rest/process-instance/{id}"
+    steps:
+      - to: "func:deleteProcessInstance"
+      - to: "log:ProcessInstanceDeleted?level=INFO"
+
+  # Route for getting deployment details
+  - id: "getDeploymentDetails"
+    from: "rest:get:/engine-rest/deployment/{id}"
+    steps:
+      - to: "func:getDeploymentDetails"
+      - to: "log:DeploymentDetailsRetrieved?level=INFO"
+
+  # Route for creating a deployment
+  - id: "createDeployment"
+    from: "rest:post:/engine-rest/deployment/create"
+    steps:
+      - to: "func:createDeployment"
+      - to: "log:DeploymentCreated?level=INFO"

@@ -1,0 +1,129 @@
+components:
+  # Notification Panel Component
+  - id: notification-panel
+    tag: "notification-panel"
+    properties:
+      websocket-url: "ws://localhost:8080/notifications"
+    lifecycle:
+      onMount: "connect:websocket"
+      onUnmount: "disconnect:websocket"
+
+  # Task Table Component
+  - id: task-table
+    tag: "task-table"
+    properties:
+      data-source: "/api/tasks"
+      columns:
+        - { key: "id", label: "Task ID" }
+        - { key: "name", label: "Task Name" }
+        - { key: "assignee", label: "Assignee" }
+        - { key: "dueDate", label: "Due Date" }
+      pagination: true
+    events:
+      onRowClick: "navigate:/tasks/{{ id }}"
+
+  # Task Details Component
+  - id: task-details
+    tag: "task-details"
+    properties:
+      data-source: "/api/tasks/{{ id }}"
+      fields:
+        - { key: "id", label: "Task ID" }
+        - { key: "name", label: "Task Name" }
+        - { key: "description", label: "Description" }
+        - { key: "assignee", label: "Assignee" }
+        - { key: "dueDate", label: "Due Date" }
+        - { key: "status", label: "Status" }
+
+  # Process Instance Table Component
+  - id: process-instance-table
+    tag: "process-instance-table"
+    properties:
+      data-source: "/api/process-instances"
+      columns:
+        - { key: "id", label: "Instance ID" }
+        - { key: "definitionKey", label: "Definition Key" }
+        - { key: "startTime", label: "Start Time" }
+        - { key: "state", label: "State" }
+      pagination: true
+    events:
+      onRowClick: "navigate:/process-instances/{{ id }}"
+
+  # Process Instance Details Component
+  - id: process-instance-details
+    tag: "process-instance-details"
+    properties:
+      data-source: "/api/process-instances/{{ id }}"
+      fields:
+        - { key: "id", label: "Instance ID" }
+        - { key: "definitionKey", label: "Definition Key" }
+        - { key: "startTime", label: "Start Time" }
+        - { key: "endTime", label: "End Time" }
+        - { key: "state", label: "State" }
+
+  # Deployment Table Component
+  - id: deployment-table
+    tag: "deployment-table"
+    properties:
+      data-source: "/api/deployments"
+      columns:
+        - { key: "id", label: "Deployment ID" }
+        - { key: "name", label: "Name" }
+        - { key: "deploymentTime", label: "Deployment Time" }
+      pagination: true
+    events:
+      onRowClick: "navigate:/deployments/{{ id }}"
+
+  # Deployment Details Component
+  - id: deployment-details
+    tag: "deployment-details"
+    properties:
+      data-source: "/api/deployments/{{ id }}"
+      fields:
+        - { key: "id", label: "Deployment ID" }
+        - { key: "name", label: "Name" }
+        - { key: "deploymentTime", label: "Deployment Time" }
+
+  # Start Process Form Component
+  - id: start-process-form
+    tag: "start-process-form"
+    properties:
+      data-source: "/api/process-definition/key/{{ key }}/start"
+      fields:
+        - { key: "key", label: "Process Key", type: "text" }
+        - { key: "variables", label: "Variables", type: "json" }
+      submitLabel: "Start Process"
+    events:
+      onSubmit: "api:post:/api/process-definition/key/{{ key }}/start"
+
+  # Task Status Chart Component
+  - id: task-status-chart
+    tag: "task-status-chart"
+    properties:
+      data-source: "/api/task-status-data"
+      type: "pie-chart"
+      colorScheme: "category10"
+      legend: true
+      labels: true
+
+  # Active Process Instances Chart Component
+  - id: active-process-instances-chart
+    tag: "active-process-instances-chart"
+    properties:
+      data-source: "/api/active-process-instances"
+      type: "bar-chart"
+      xKey: "definitionKey"
+      yKey: "count"
+      color: "blue"
+
+  # Settings Form Component
+  - id: settings-form
+    tag: "settings-form"
+    properties:
+      data-source: "/api/settings"
+      fields:
+        - { key: "theme", label: "Theme", type: "select", options: ["light", "dark"] }
+        - { key: "notifications", label: "Enable Notifications", type: "checkbox" }
+      submitLabel: "Save Settings"
+    events:
+      onSubmit: "api:post:/api/settings"

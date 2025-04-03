@@ -1,0 +1,38 @@
+rests:
+  # Starts a process instance
+  - path: "/api/process-definition/key/{key}/start"
+    post:
+      uri: "direct:startCamunda8ProcessInstance"
+      description: "Starts a process instance by key"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Retrieves a list of tasks
+  - path: "/api/tasks"
+    get:
+      uri: "direct:getTaskList"
+      description: "Retrieves a list of tasks"
+      produces: "application/json"
+
+  # Completes a task
+  - path: "/api/tasks/{id}/complete"
+    post:
+      uri: "direct:completeTask"
+      description: "Completes a task by ID"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Suspends a process instance
+  - path: "/api/process-instance/{id}/suspend"
+    post:
+      uri: "direct:suspendProcessInstance"
+      description: "Suspends a process instance by ID"
+      consumes: "application/json"
+      produces: "application/json"
+
+  # Deletes a process instance
+  - path: "/api/process-instance/{id}"
+    delete:
+      uri: "direct:deleteProcessInstance"
+      description: "Deletes a process instance by ID"
+      produces: "application/json"

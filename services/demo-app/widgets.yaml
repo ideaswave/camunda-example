@@ -1,0 +1,127 @@
+widgets:
+  # User Profile Card
+  - id: user-card
+    type: "profile"
+    properties:
+      user-id: "{{ user.id }}"
+      theme: "dark"
+    events:
+      onClick: "navigate:/profile/{{ user.id }}"
+
+  # Task List Widget
+  - id: task-list
+    type: "table"
+    data-source: "/api/tasks"
+    properties:
+      columns:
+        - { key: "id", label: "Task ID" }
+        - { key: "name", label: "Task Name" }
+        - { key: "assignee", label: "Assignee" }
+        - { key: "dueDate", label: "Due Date" }
+      pagination: true
+    events:
+      onRowClick: "navigate:/tasks/{{ id }}"
+
+  # Task Details Widget
+  - id: task-details
+    type: "details"
+    data-source: "/api/tasks/{{ id }}"
+    properties:
+      fields:
+        - { key: "id", label: "Task ID" }
+        - { key: "name", label: "Task Name" }
+        - { key: "description", label: "Description" }
+        - { key: "assignee", label: "Assignee" }
+        - { key: "dueDate", label: "Due Date" }
+        - { key: "status", label: "Status" }
+
+  # Process Instance List Widget
+  - id: process-instance-list
+    type: "table"
+    data-source: "/api/process-instances"
+    properties:
+      columns:
+        - { key: "id", label: "Instance ID" }
+        - { key: "definitionKey", label: "Definition Key" }
+        - { key: "startTime", label: "Start Time" }
+        - { key: "state", label: "State" }
+      pagination: true
+    events:
+      onRowClick: "navigate:/process-instances/{{ id }}"
+
+  # Process Instance Details Widget
+  - id: process-instance-details
+    type: "details"
+    data-source: "/api/process-instances/{{ id }}"
+    properties:
+      fields:
+        - { key: "id", label: "Instance ID" }
+        - { key: "definitionKey", label: "Definition Key" }
+        - { key: "startTime", label: "Start Time" }
+        - { key: "endTime", label: "End Time" }
+        - { key: "state", label: "State" }
+
+  # Deployment List Widget
+  - id: deployment-list
+    type: "table"
+    data-source: "/api/deployments"
+    properties:
+      columns:
+        - { key: "id", label: "Deployment ID" }
+        - { key: "name", label: "Name" }
+        - { key: "deploymentTime", label: "Deployment Time" }
+      pagination: true
+    events:
+      onRowClick: "navigate:/deployments/{{ id }}"
+
+  # Deployment Details Widget
+  - id: deployment-details
+    type: "details"
+    data-source: "/api/deployments/{{ id }}"
+    properties:
+      fields:
+        - { key: "id", label: "Deployment ID" }
+        - { key: "name", label: "Name" }
+        - { key: "deploymentTime", label: "Deployment Time" }
+
+  # Start Process Widget
+  - id: start-process
+    type: "form"
+    data-source: "/api/process-definition/key/{{ key }}/start"
+    properties:
+      fields:
+        - { key: "key", label: "Process Key", type: "text" }
+        - { key: "variables", label: "Variables", type: "json" }
+      submitLabel: "Start Process"
+    events:
+      onSubmit: "api:post:/api/process-definition/key/{{ key }}/start"
+
+  # Task Status Chart Widget
+  - id: task-status-chart
+    type: "pie-chart"
+    data-source: "/api/task-status-data"
+    properties:
+      colorScheme: "category10"
+      legend: true
+      labels: true
+
+  # Active Process Instances Chart Widget
+  - id: active-process-instances-chart
+    type: "bar-chart"
+    data-source: "/api/active-process-instances"
+    properties:
+      xKey: "definitionKey"
+      yKey: "count"
+      color: "blue"
+
+  # Settings Widget
+  - id: settings
+    type: "form"
+    data-source: "/api/settings"
+    properties:
+      fields:
+        - { key: "theme", label: "Theme", type: "select", options: ["light", "dark"] }
+        - { key: "notifications", label: "Enable Notifications", type: "checkbox" }
+      submitLabel: "Save Settings"
+    events:
+      onSubmit: "api:post:/api/settings"
