@@ -1,6 +1,6 @@
-# Camunda Engine Orchestrator
+# Camunda WASM microservices
 
-Welcome to the **Camunda Engine Orchestrator**, a lightweight, distributed, and autoscaling platform designed to simplify workflow management and migration between **Camunda 7** and **Camunda 8**. This engine introduces a new paradigm in distributed computing, leveraging **WebAssembly (WASM)** for high-performance, portable, and secure service execution.
+Welcome to the **Camunda WASM microservices**, a lightweight, distributed, and autoscaling platform designed to simplify workflow management and migration between **Camunda 7** and **Camunda 8**. This engine introduces a new paradigm in distributed computing, leveraging **WebAssembly (WASM)** for high-performance, portable, and secure service execution.
 
 ---
 
@@ -12,7 +12,7 @@ Welcome to the **Camunda Engine Orchestrator**, a lightweight, distributed, and 
 - **State Synchronization**: Synchronize process instances and variables between Camunda 7 and Camunda 8.
 
 ### 2. **High-Performance Job Workers**
-- **Lightweight Execution**: The engine is only **20MB** and can handle **100k WASM services per host**.
+- **Lightweight Execution**: The engine is only **20MB** and can handle **100 WASM services per host**.
 - **Distributed and Autoscaling**: Automatically scale job workers across multiple hosts for fault tolerance and performance.
 - **Cross-Environment Compatibility**: Run job workers on **browsers, mobile devices, servers, or microcontrollers**.
 
